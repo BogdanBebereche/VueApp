@@ -7,9 +7,10 @@
         <input v-model="name" type="text" class="col-sm-8" required />
       </div>
       <div class="form-group mt-3">
-        <select v-model="status">
-          <option value="true">In Stock</option>
-          <option value="false">Out Of Stock</option>
+        <select v-model="program">
+          <option value="Licenta">Licenta</option>
+          <option value="Master">Master</option>
+          <option value="Doctorat">Doctorat</option>
         </select>
       </div>
       <br />
@@ -24,7 +25,7 @@ import utils from "../utils";
 export default {
   data() {
     return {
-      status: false,
+      program: "Licenta",
       name: "",
     };
   },
@@ -37,7 +38,7 @@ export default {
 
       let data = {};
       data.name = this.name;
-      data.status = this.status;
+      data.program = this.program;
       // let sport = { name: "fotbal" };
       // // data.sport = { name: "fotbal" };
       // data.sport.push(sport);

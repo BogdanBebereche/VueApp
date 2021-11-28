@@ -77,10 +77,28 @@ app.get("/generateRandomData/:noOfRecords", async (req, res) => {
   let number = req.params.noOfRecords;
 
   for (let i = 0; i < number; i++) {
+    let rand = Math.floor(Math.random() * 3);
+    let programData;
+    console.log(rand);
+    switch (rand) {
+      case 0:
+        programData = "Licenta";
+        break;
+      case 1:
+        programData = "Master";
+        break;
+      case 2:
+        programData = "Doctorat";
+        break;
+      default:
+        programData = "Licenta";
+        break;
+    }
     let obj = {
       name: faker.name.findName(),
-      status: faker.datatype.boolean(),
+      program: programData,
     };
+    console.log(obj);
     const res = await db.collection("students").add(obj);
   }
   res.send("Vrei sa introduci urmatorul numar de date random : " + number);

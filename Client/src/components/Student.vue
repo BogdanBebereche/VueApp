@@ -2,8 +2,7 @@
   <div class="card container-sm m-1 mx-auto">
     <div v-if="isAuthenticated" class="card-body">
       <h5 class="card-title">Nume student: {{ student.name }}</h5>
-      <h5 class="card-title">Status student: {{ student.status }}</h5>
-      <h5 class="card-title">ID student: {{ student.id }}</h5>
+      <h5 class="card-title">Program student: {{ student.program }}</h5>
       <div class="container px-4">
         <div class="row justify-content-evenly text-nowrap m-3">
           <button
@@ -11,7 +10,7 @@
             @click="
               () => {
                 handleSportShow = !handleSportShow;
-                getSports();
+                //getSports();
               }
             "
             class="btn btn-primary col-2"
@@ -57,7 +56,11 @@
           <!-- && student.sport.length > 0 -->
           <div v-if="handleSportShow && this.sports.length > 0" class="row">
             <!--!!!!!!!!!!! -->
-            <div class="row" v-for="sport in this.sports" :key="sport.id">
+            <div
+              class="row text-nowrap m-1"
+              v-for="sport in this.sports"
+              :key="sport.id"
+            >
               <div class="col-4">Sport: {{ sport.name }}</div>
               <button
                 v-if="isAuthenticated"
@@ -66,11 +69,10 @@
               >
                 Edit
               </button>
-
               <button
                 v-if="isAuthenticated"
                 @click="deleteSport(sport)"
-                class="btn btn-danger col-2"
+                class="btn btn-danger col-2 offset-md-1"
               >
                 Remove
               </button>
@@ -99,6 +101,12 @@ export default {
       sports: [],
     };
   },
+  // beforeCreate() {
+  //   this.getSports();
+  // },
+  beforeMount() {
+    this.getSports();
+  },
   computed: {
     isAuthenticated() {
       return this.$store.state.isAuthenticated;
@@ -123,20 +131,26 @@ export default {
       requestParameters.body = JSON.stringify(data);
 
       fetch(utils.url + "students/sport/" + this.student.id, requestParameters);
+      //this.getSports();
+      this.sports.push(data);
       this.handleSportSearch = !this.handleSportSearch;
       this.sportName = "";
     },
-    deleteSport(sport) {
+    async deleteSport(sport) {
       let requestParameters = { ...utils.globalRequestParameters };
       let token = window.localStorage.getItem("token");
       requestParameters.headers.Authorization = "Bearer " + token;
       requestParameters.method = "DELETE";
 
-      console.log("try to remove");
-      fetch(
+      await fetch(
         utils.url + "students/sport/" + this.student.id + "/" + sport.id,
         requestParameters
       );
+      //!!!!!!
+      //this.getSports();
+      //this.$forceUpdate();
+      this.sports.splice(this.sports.indexOf(sport), 1);
+      //location.reload();
     },
     editSport(sport) {
       this.$router.push("/editsport/" + this.student.id + "/" + sport.id);

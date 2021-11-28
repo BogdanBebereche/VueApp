@@ -35,22 +35,18 @@ function checkAuthorization(req, res, next) {
 
 router.get("/students", async (req, res) => {
   let students = [];
-  //Get all students
   const response = await db.collection("students").get();
-  //Iterate over
+
   console.log(response);
   response.forEach((doc) => {
     let student = {};
+
     student.id = doc.id;
     student.name = doc.data().name;
-    student.status = doc.data().status;
+    student.program = doc.data().program;
 
-    // student.sport = doc.data().sport;
-    //Push every elem into Obj Array
     students.push(student);
   });
-
-  //Respond with student array
   res.json(students);
 });
 
@@ -64,7 +60,7 @@ router.post("/students", checkAuthorization, async (req, res) => {
   console.log("Vrei sa adaugi un produs.");
   let student = {};
   student.name = req.body.name;
-  student.status = req.body.status;
+  student.program = req.body.program;
   const insert = await db.collection("students").add(student);
 
   res.json({ id: student.id });
@@ -73,7 +69,6 @@ router.post("/students", checkAuthorization, async (req, res) => {
 //Edit student
 router.put("/students/:id", checkAuthorization, async (req, res) => {
   console.log("Vrei sa actualizezi produsul cu id-ul: " + req.params.id);
-
   const response = await db
     .collection("students")
     .doc(req.params.id)
@@ -84,56 +79,20 @@ router.put("/students/:id", checkAuthorization, async (req, res) => {
   });
 });
 
-//Post student's sport
-router.post("/students/sport/:id", async (req, res) => {
-  console.log("Vrei sa actualizezi produsul cu id-ul: " + req.params.id);
-
-  // const data = await db.collection("students").doc(req.params.id).get();
-  // const student = data.data();
-  // console.log(student);
-  let obj = {};
-  obj.name = req.body.name;
-
-  let response = await db
-    .collection("students")
-    .doc(req.params.id)
-    .collection("sports")
-    // .doc(req.params.sportId)
-    // .get();
-    .add(obj);
-
-  res.json(response);
-});
-
-router.get("/students/sport/:id", async (req, res) => {
-  console.log("getting the sports");
-  const response = await db
-    .collection("students")
-    .doc(req.params.id)
-    .collection("sports")
-    .get();
-
-  let sports = [];
-  console.log(response);
-  response.forEach((doc) => {
-    let sport = {};
-    sport.id = doc.id;
-    sport.name = doc.data().name;
-
-    sports.push(sport);
-  });
-  res.json(sports);
-});
-
 //Delete students
 router.delete("/students/:id", checkAuthorization, (req, res) => {
   console.log("Vrei sa stergi produsul cu id-ul: " + req.params.id);
   let id = req.params.id;
-  // const sports = db
-  //   .collection("students")
-  //   .doc(id)
-  //   .collection("sports")
-
+  const students = db
+    .collection("students")
+    .doc(id)
+    .collection("sports")
+    .listDocuments()
+    .then((val) => {
+      val.map((val) => {
+        val.delete();
+      });
+    });
   const student = db.collection("students").doc(id).delete();
   res.json({
     message: "Am sters produsul cu id ul" + req.params.id + " de pe server!",

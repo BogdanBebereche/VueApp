@@ -1,39 +1,39 @@
 <template>
   <div class="card card-body mt-4 container col-8">
     <br />
-    <div>Numele studentilor:</div>
+    <div v-if="isAuthenticated">
+      <div>Numele studentilor:</div>
 
-    <div v-if="isAuthenticated" class="buttons">
-      <button
-        class="btn btn-light"
-        @click.prevent="
-          () => {
-            students.sort(compare);
-          }
-        "
-      >
-        ASC
-      </button>
-      <button
-        class="btn btn-light"
-        @click.prevent="
-          () => {
-            students.sort(compare).reverse();
-          }
-        "
-      >
-        DESC
-      </button>
+      <div v-if="isAuthenticated" class="buttons">
+        <button
+          class="btn btn-light"
+          @click.prevent="
+            () => {
+              students.sort(compare);
+            }
+          "
+        >
+          ASC
+        </button>
+        <button
+          class="btn btn-light"
+          @click.prevent="
+            () => {
+              students.sort(compare).reverse();
+            }
+          "
+        >
+          DESC
+        </button>
+      </div>
+      <Student
+        @remove="deleteStudent"
+        :student="elem"
+        v-for="elem in students"
+        :key="elem.id"
+      />
     </div>
-    <Student
-      @edit="editStudent"
-      @remove="deleteStudent"
-      @addSport="addSport"
-      @sportName="sportName"
-      :student="elem"
-      v-for="elem in students"
-      :key="elem.id"
-    />
+    <div v-else>Please Log in in order to see the students</div>
   </div>
 </template>
 
@@ -47,9 +47,7 @@ export default {
     Student,
   },
   data() {
-    return {
-      sportName: "",
-    };
+    return {};
   },
   created() {
     let url = utils.url;
@@ -70,9 +68,6 @@ export default {
     },
   },
   methods: {
-    editStudent(student) {
-      this.formStudent = student;
-    },
     deleteStudent(student) {
       console.log("Try to delete ", student);
       this.$store.dispatch("deleteStudent", student);
@@ -83,14 +78,7 @@ export default {
 
       fetch(utils.url + "students/" + student.id, requestParameters);
     },
-    addSport(student) {
-      let requestParameters = { ...utils.globalRequestParameters };
-      let token = window.localStorage.getItem("token");
-      requestParameters.headers.Authorization = "Bearer " + token;
-      requestParameters.method = "PUT";
 
-      requestParameters.body = JSON.stringify(student);
-    },
     compare(a, b) {
       if (a.name < b.name) {
         return -1;

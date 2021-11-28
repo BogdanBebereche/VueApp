@@ -33,13 +33,29 @@ function checkAuthorization(req, res, next) {
   }
 }
 
-//Post student's sport
-router.post("/students/sport/:id", checkAuthorization, async (req, res) => {
-  console.log("Vrei sa adaugi produsul cu id-ul: " + req.params.id);
+router.get("/students/sport/:id", async (req, res) => {
+  console.log("getting the sports");
+  const response = await db
+    .collection("students")
+    .doc(req.params.id)
+    .collection("sports")
+    .get();
 
-  // const data = await db.collection("students").doc(req.params.id).get();
-  // const student = data.data();
-  // console.log(student);
+  let sports = [];
+  console.log(response);
+  response.forEach((doc) => {
+    let sport = {};
+    sport.id = doc.id;
+    sport.name = doc.data().name;
+
+    sports.push(sport);
+  });
+  res.json(sports);
+});
+
+//Post student's sport
+router.post("/students/sport/:id", async (req, res) => {
+  console.log("Vrei sa actualizezi produsul cu id-ul: " + req.params.id);
   let obj = {};
   obj.name = req.body.name;
 
@@ -47,8 +63,6 @@ router.post("/students/sport/:id", checkAuthorization, async (req, res) => {
     .collection("students")
     .doc(req.params.id)
     .collection("sports")
-    // .doc(req.params.sportId)
-    // .get();
     .add(obj);
 
   res.json(response);
@@ -68,8 +82,6 @@ router.delete(
       .collection("students")
       .doc(req.params.id)
       .collection("sports")
-      // .doc(req.params.sportId)
-      // .get();
       .doc(req.params.sportId)
       .delete();
 

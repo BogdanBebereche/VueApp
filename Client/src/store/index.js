@@ -11,11 +11,11 @@ export default createStore({
     },
   },
   mutations: {
-    SET_STUDENTS: (state, students) => {
-      state.students = students;
-    },
     SET_AUTH: (state, status) => {
       state.isAuthenticated = status;
+    },
+    SET_STUDENTS: (state, students) => {
+      state.students = students;
     },
     ADD_STUDENT: (state, student) => {
       state.students.push(student);
@@ -26,11 +26,11 @@ export default createStore({
     },
   },
   actions: {
-    fetchStudents: ({ commit }, payload) => {
-      commit("SET_STUDENTS", payload);
-    },
     login: ({ commit }, payload) => {
       commit("SET_AUTH", payload);
+    },
+    fetchStudents: ({ commit }, payload) => {
+      commit("SET_STUDENTS", payload);
     },
     addStudent: ({ commit }, payload) => {
       commit("ADD_STUDENT", payload);
