@@ -29,6 +29,7 @@ export default {
       name: "",
     };
   },
+
   methods: {
     //Submit edit product
     editProduct() {
