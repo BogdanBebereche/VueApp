@@ -10,31 +10,33 @@
             @click="
               () => {
                 handleSportShow = !handleSportShow;
-                //getSports();
               }
             "
-            class="btn btn-primary col-2"
+            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
           >
             View sports
           </button>
+
           <button
             v-if="isAuthenticated"
             @click="() => (handleSportSearch = !handleSportSearch)"
-            class="btn btn-primary col-2"
+            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
           >
             Add sport
           </button>
+
           <button
             v-if="isAuthenticated"
             @click="edit"
-            class="btn btn-primary col-2"
+            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
           >
             Edit
           </button>
+
           <button
             v-if="isAuthenticated"
             @click="remove"
-            class="btn btn-danger col-2"
+            class="btn btn-danger btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
           >
             Delete
           </button>
