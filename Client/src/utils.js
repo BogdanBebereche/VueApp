@@ -12,5 +12,16 @@ let globalRequestParameters = {
   referrerPolicy: "no-referrer",
 };
 
+let compareName = function (a, b) {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};
+
 module.exports.globalRequestParameters = globalRequestParameters;
 module.exports.url = url;
+module.exports.compareName = compareName;

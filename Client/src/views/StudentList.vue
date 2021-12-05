@@ -9,7 +9,7 @@
           class="btn btn-light"
           @click.prevent="
             () => {
-              students.sort(compare);
+              students.sort(compareName);
             }
           "
         >
@@ -19,7 +19,7 @@
           class="btn btn-light"
           @click.prevent="
             () => {
-              students.sort(compare).reverse();
+              students.sort(compareName).reverse();
             }
           "
         >
@@ -39,7 +39,7 @@
 
 <script>
 import Student from "../components/Student.vue";
-import utils, { globalRequestParameters } from "../utils.js";
+import utils, { globalRequestParameters, compareName } from "../utils.js";
 
 export default {
   name: "StudentList",
@@ -78,16 +78,7 @@ export default {
 
       fetch(utils.url + "students/" + student.id, requestParameters);
     },
-
-    compare(a, b) {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    },
+    compareName,
   },
 };
 </script>
