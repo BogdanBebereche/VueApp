@@ -1,5 +1,5 @@
-let url = "http://127.0.0.1:3000/";
-// let url = "https://git.heroku.com/bodi-tic.git";
+//let url = "http://127.0.0.1:3000/";
+let url = "https://tic-bodi.herokuapp.com/";
 let globalRequestParameters = {
   method: "GET",
   mode: "cors",

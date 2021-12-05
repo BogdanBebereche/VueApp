@@ -12,7 +12,7 @@
                 handleSportShow = !handleSportShow;
               }
             "
-            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
+            class="btn btn-primary btn-block col-sm-8 col-md-2 m-sm-1"
           >
             View sports
           </button>
@@ -20,7 +20,7 @@
           <button
             v-if="isAuthenticated"
             @click="() => (handleSportSearch = !handleSportSearch)"
-            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
+            class="btn btn-primary btn-block col-sm-8 col-md-2 m-sm-1"
           >
             Add sport
           </button>
@@ -28,7 +28,7 @@
           <button
             v-if="isAuthenticated"
             @click="edit"
-            class="btn btn-primary btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
+            class="btn btn-primary btn-block col-sm-8 col-md-2 m-sm-1"
           >
             Edit
           </button>
@@ -36,7 +36,7 @@
           <button
             v-if="isAuthenticated"
             @click="remove"
-            class="btn btn-danger btn-block col-sm-8 col-lg-2 m-sm-1 m-md-1"
+            class="btn btn-danger btn-block col-sm-8 col-md-2 m-sm-1"
           >
             Delete
           </button>
@@ -49,32 +49,32 @@
           <button
             v-if="isAuthenticated"
             @click="addSport"
-            class="btn btn-primary col-2"
+            class="btn btn-primary btn-block col-2"
           >
             Add
           </button>
         </div>
         <div>
           <!-- && student.sport.length > 0 -->
-          <div v-if="handleSportShow && this.sports.length > 0" class="row">
+          <div v-if="handleSportShow && this.sports.length > 0" class="">
             <!--!!!!!!!!!!! -->
             <div
-              class="row text-nowrap m-1"
+              class="row justify-content-evenly text-nowrap"
               v-for="sport in this.sports"
               :key="sport.id"
             >
-              <div class="col-4">Sport: {{ sport.name }}</div>
+              <div class="col-md-2">Sport: {{ sport.name }}</div>
               <button
                 v-if="isAuthenticated"
                 @click="editSport(sport)"
-                class="btn btn-primary col-2"
+                class="btn btn-primary btn-block col-md-2 m-sm-1"
               >
                 Edit
               </button>
               <button
                 v-if="isAuthenticated"
                 @click="deleteSport(sport)"
-                class="btn btn-danger col-2 offset-md-1"
+                class="btn btn-danger btn-block col-md-2 m-sm-1"
               >
                 Remove
               </button>
@@ -86,6 +86,8 @@
     </div>
   </div>
 </template>
+
+<style></style>
 
 <script>
 import utils, { globalRequestParameters } from "../utils.js";
