@@ -6,7 +6,7 @@
 
       <div v-if="isAuthenticated" class="buttons">
         <button
-          class="btn btn-light"
+          class="btn btn-light m-1"
           @click.prevent="
             () => {
               students.sort(compareName);
@@ -16,7 +16,7 @@
           ASC
         </button>
         <button
-          class="btn btn-light"
+          class="btn btn-light m-1"
           @click.prevent="
             () => {
               students.sort(compareName).reverse();

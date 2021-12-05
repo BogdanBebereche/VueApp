@@ -6,7 +6,7 @@ var morgan = require("morgan");
 const { nextTick } = require("process");
 var faker = require("faker/locale/ro");
 const { v4: uuidv4 } = require("uuid");
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const bcrypt = require("bcrypt");
 const { exists } = require("fs");

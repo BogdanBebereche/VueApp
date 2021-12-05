@@ -9,7 +9,7 @@ const {
   FieldValue,
 } = require("firebase-admin/firestore");
 
-const serviceAccount = require("./ProiectTIC.json");
+const serviceAccount = require("./assets/ProiectTic.json");
 
 initializeApp({
   credential: cert(serviceAccount),
